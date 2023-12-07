@@ -10,50 +10,62 @@ public class TopDownMovement : MonoBehaviour
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private bool isInputsFrozen = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator.runtimeAnimatorController = idleController; // Start with the idle controller
+        animator.runtimeAnimatorController = idleController;
     }
 
     void Update()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-
-        Vector2 moveInput = new Vector2(moveHorizontal, moveVertical);
-        moveInput.Normalize();
-
-        rb2d.velocity = moveInput * moveSpeed;
-
-        // Switch between idle and movement Animator Controllers based on movement
-        if (moveInput.magnitude > 0.1f)
+        if (!isInputsFrozen)
         {
-            // Switch to the movement controller
-            if (animator.runtimeAnimatorController != movementController)
-                animator.runtimeAnimatorController = movementController;
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
+            float moveVertical = Input.GetAxisRaw("Vertical");
 
-            // Flip the sprite based on movement direction
-            FlipSprite(moveInput.x);
-        }
-        else
-        {
-            // Switch to the idle controller
-            if (animator.runtimeAnimatorController != idleController)
-                animator.runtimeAnimatorController = idleController;
+            Vector2 moveInput = new Vector2(moveHorizontal, moveVertical);
+            moveInput.Normalize();
+
+            rb2d.velocity = moveInput * moveSpeed;
+
+            if (moveInput.magnitude > 0.1f)
+            {
+                if (animator.runtimeAnimatorController != movementController)
+                    animator.runtimeAnimatorController = movementController;
+
+                FlipSprite(moveInput.x);
+            }
+            else
+            {
+                if (animator.runtimeAnimatorController != idleController)
+                    animator.runtimeAnimatorController = idleController;
+            }
         }
     }
 
     void FlipSprite(float horizontalInput)
     {
         if (horizontalInput < 0)
-            spriteRenderer.flipX = true; // Flip the sprite when moving left
+            spriteRenderer.flipX = true;
         else if (horizontalInput > 0)
-            spriteRenderer.flipX = false; // Unflip the sprite when moving right
+            spriteRenderer.flipX = false;
+    }
+
+    public void FreezePlayerInputs()
+    {
+        isInputsFrozen = true;
+        // Optionally, you can add more logic here, like stopping animations or other actions.
+    }
+
+    public void UnfreezePlayerInputs()
+    {
+        isInputsFrozen = false;
     }
 }
+
 
 
 
