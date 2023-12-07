@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiToActivate: {fileID: 0}
   defaultDialogueLines: []
+  npcImage: {fileID: 0}
 --- !u!114 &7258704892419733688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,5 +107,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 0}
-  lines: []
+  npcImage: {fileID: 0}
   textSpeed: 0.3

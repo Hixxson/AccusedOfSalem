@@ -1,31 +1,35 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-
-
 
 public class NPCDialogueTrigger : MonoBehaviour
 {
     public GameObject uiToActivate;
-    public string[] defaultDialogueLines; 
+    public string[] defaultDialogueLines;
+    public Sprite npcImage;
 
     private Dialogue dialogueScriptReference;
+    private NpcController npcController;
+    private bool hasInteracted;
 
     private void Start()
     {
-        
         dialogueScriptReference = GetComponentInChildren<Dialogue>();
-
-       
-        SetDialogueLines(defaultDialogueLines);
+        npcController = GetComponent<NpcController>();
+        hasInteracted = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasInteracted)
         {
             uiToActivate.SetActive(true);
             StartDialogue();
+            hasInteracted = true;
+
+           
+            if (npcController != null)
+            {
+                npcController.StopMoving();
+            }
         }
     }
 
@@ -34,21 +38,31 @@ public class NPCDialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             uiToActivate.SetActive(false);
+            hasInteracted = false;
+
+      
+            if (npcController != null)
+            {
+                npcController.ResumeMoving();
+            }
         }
     }
 
     private void StartDialogue()
     {
-     
-        DialogueManager.instance.StartDialogue(dialogueScriptReference.textComponent, dialogueScriptReference.lines, dialogueScriptReference.textSpeed);
-    }
+        if (npcImage != null)
+        {
+            dialogueScriptReference.SetNPCImage(npcImage);
+        }
 
-    public void SetDialogueLines(string[] newLines)
-    {
-      
-        dialogueScriptReference.SetLines(newLines);
+        dialogueScriptReference.SetLines(defaultDialogueLines);
+
+        DialogueManager.instance.StartDialogue(dialogueScriptReference);
     }
 }
+
+
+
 
 
 
