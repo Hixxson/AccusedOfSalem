@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1405063163763055142
 BoxCollider2D:
@@ -92,8 +92,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiToActivate: {fileID: 0}
-  defaultDialogueLines: []
+  npcDialogueLines: []
+  response1Line: []
+  response2Line: []
+  questCompletedLines: []
+  questName: 
+  isQuestCompletionTrigger: 0
   npcImage: {fileID: 0}
+  dialogueScriptReference: {fileID: 7258704892419733688}
+  button1Text: Button 1
+  button2Text: Button 2
 --- !u!114 &7258704892419733688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,5 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 0}
+  button1Text: {fileID: 0}
+  button2Text: {fileID: 0}
   npcImage: {fileID: 0}
-  textSpeed: 0.3
+  lines: []
+  textSpeed: 0.01
