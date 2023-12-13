@@ -12,6 +12,7 @@ TagManager:
   - Housing
   - Water
   - UI
+  - particule
   - 
   - 
   - 
@@ -19,8 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Part
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: particule
+    uniqueID: 2022354189
     locked: 0
