@@ -4,13 +4,12 @@ public class TopDownMovement : MonoBehaviour
 {
     public float moveSpeed;
     public Rigidbody2D rb2d;
-
     public RuntimeAnimatorController idleController;
     public RuntimeAnimatorController movementController;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private bool isInputsFrozen = false;
+    private bool isInputsFrozen = true;
 
     void Start()
     {
@@ -57,15 +56,25 @@ public class TopDownMovement : MonoBehaviour
     public void FreezePlayerInputs()
     {
         isInputsFrozen = true;
-        // Optionally, you can add more logic here, like stopping animations or other actions.
     }
 
     public void UnfreezePlayerInputs()
     {
         isInputsFrozen = false;
     }
+
+    private void OnEnable()
+    {
+        EventManager.OnFreezePlayer += HandleFreezePlayer;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnFreezePlayer -= HandleFreezePlayer;
+    }
+
+    private void HandleFreezePlayer(bool freeze)
+    {
+        isInputsFrozen = freeze;
+    }
 }
-
-
-
-
