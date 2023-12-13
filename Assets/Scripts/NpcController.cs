@@ -33,7 +33,6 @@ public class NpcController : MonoBehaviour
     public void ResumeMoving()
     {
         isMoving = true;
-        StartCoroutine(DestroyAfterDelay(2f));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -42,9 +41,27 @@ public class NpcController : MonoBehaviour
         {
             // Trigger the event to unfreeze player movement
             EventManager.TriggerFreezePlayer(false);
-            hasCollidedWithPlayer = true;
 
-            // Additional logic...
+            // Stop NPC movement
+            StopMoving();
+
+
+            // Set a flag to remember the collision
+            hasCollidedWithPlayer = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Resume NPC movement
+            ResumeMoving();
+
+            // Set a flag to remember the exit
+            hasCollidedWithPlayer = false;
+
+            // Start the destruction coroutine
             StartCoroutine(DestroyAfterDelay(2f));
         }
     }

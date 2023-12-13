@@ -43,7 +43,7 @@ public class QuestManager : MonoBehaviour
             Debug.Log("Quest '" + questName + "' completed!");
 
             // Check if the number of completed quests equals 3
-            if (completedQuestCount == 3)
+            if (completedQuestCount == 4)
             {
                 LoadNextScene();
             }
